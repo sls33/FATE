@@ -27,9 +27,10 @@ from federatedml.transfer_variable.base_transfer_variable import BaseTransferVar
 
 
 # noinspection PyAttributeOutsideInit
-class HeteroFeatureBinningTransferVariable(BaseTransferVariables):
+class SecretShareTransferVariable(BaseTransferVariables):
     def __init__(self, flowid=0):
         super().__init__(flowid)
-        self.encrypted_bin_sum = self._create_variable(name='encrypted_bin_sum', src=['host'], dst=['guest'])
-        self.encrypted_label = self._create_variable(name='encrypted_label', src=['guest'], dst=['host'])
-        self.paillier_pubkey = self._create_variable(name='paillier_pubkey', src=['guest'], dst=['host'])
+        self.multiply_triplets_cross = self._create_variable(name='multiply_triplets_cross', src=['guest', 'host'], dst=['guest', 'host'])
+        self.multiply_triplets_encrypted = self._create_variable(name='multiply_triplets_encrypted', src=['guest', 'host'], dst=['guest', 'host'])
+        self.rescontruct = self._create_variable(name='rescontruct', src=['guest', 'host'], dst=['guest', 'host'])
+        self.share = self._create_variable(name='share', src=['guest', 'host'], dst=['guest', 'host'])

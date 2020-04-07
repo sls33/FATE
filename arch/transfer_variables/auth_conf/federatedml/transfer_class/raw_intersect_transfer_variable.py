@@ -27,9 +27,11 @@ from federatedml.transfer_variable.base_transfer_variable import BaseTransferVar
 
 
 # noinspection PyAttributeOutsideInit
-class HeteroFeatureBinningTransferVariable(BaseTransferVariables):
+class RawIntersectTransferVariable(BaseTransferVariables):
     def __init__(self, flowid=0):
         super().__init__(flowid)
-        self.encrypted_bin_sum = self._create_variable(name='encrypted_bin_sum', src=['host'], dst=['guest'])
-        self.encrypted_label = self._create_variable(name='encrypted_label', src=['guest'], dst=['host'])
-        self.paillier_pubkey = self._create_variable(name='paillier_pubkey', src=['guest'], dst=['host'])
+        self.intersect_ids_guest = self._create_variable(name='intersect_ids_guest', src=['guest'], dst=['host'])
+        self.intersect_ids_host = self._create_variable(name='intersect_ids_host', src=['host'], dst=['guest'])
+        self.send_ids_guest = self._create_variable(name='send_ids_guest', src=['guest'], dst=['host'])
+        self.send_ids_host = self._create_variable(name='send_ids_host', src=['host'], dst=['guest'])
+        self.sync_intersect_ids_multi_hosts = self._create_variable(name='sync_intersect_ids_multi_hosts', src=['guest'], dst=['host'])

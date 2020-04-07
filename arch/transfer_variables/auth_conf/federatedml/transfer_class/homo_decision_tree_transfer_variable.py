@@ -27,9 +27,9 @@ from federatedml.transfer_variable.base_transfer_variable import BaseTransferVar
 
 
 # noinspection PyAttributeOutsideInit
-class HeteroFeatureBinningTransferVariable(BaseTransferVariables):
+class HomoDecisionTreeTransferVariable(BaseTransferVariables):
     def __init__(self, flowid=0):
         super().__init__(flowid)
-        self.encrypted_bin_sum = self._create_variable(name='encrypted_bin_sum', src=['host'], dst=['guest'])
-        self.encrypted_label = self._create_variable(name='encrypted_label', src=['guest'], dst=['host'])
-        self.paillier_pubkey = self._create_variable(name='paillier_pubkey', src=['guest'], dst=['host'])
+        self.best_split_points = self._create_variable(name='best_split_points', src=['arbiter'], dst=['guest', 'host'])
+        self.cur_layer_node_num = self._create_variable(name='cur_layer_node_num', src=['guest', 'host'], dst=['arbiter'])
+        self.node_sample_num = self._create_variable(name='node_sample_num', src=['guest', 'host'], dst=['arbiter'])

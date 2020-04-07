@@ -23,14 +23,6 @@
       "dst": [
         "host"
       ]
-    },
-    "bucket_idx": {
-      "src": [
-        "guest"
-      ],
-      "dst": [
-        "host"
-      ]
     }
   }
 }

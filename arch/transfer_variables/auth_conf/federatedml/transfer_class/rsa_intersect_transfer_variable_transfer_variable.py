@@ -27,9 +27,13 @@ from federatedml.transfer_variable.base_transfer_variable import BaseTransferVar
 
 
 # noinspection PyAttributeOutsideInit
-class HeteroFeatureBinningTransferVariable(BaseTransferVariables):
+class RsaIntersectTransferVariable(BaseTransferVariables):
     def __init__(self, flowid=0):
         super().__init__(flowid)
-        self.encrypted_bin_sum = self._create_variable(name='encrypted_bin_sum', src=['host'], dst=['guest'])
-        self.encrypted_label = self._create_variable(name='encrypted_label', src=['guest'], dst=['host'])
-        self.paillier_pubkey = self._create_variable(name='paillier_pubkey', src=['guest'], dst=['host'])
+        self.cache_version_info = self._create_variable(name='cache_version_info', src=['guest'], dst=['host'])
+        self.cache_version_match_info = self._create_variable(name='cache_version_match_info', src=['host'], dst=['guest'])
+        self.intersect_guest_ids = self._create_variable(name='intersect_guest_ids', src=['guest'], dst=['host'])
+        self.intersect_guest_ids_process = self._create_variable(name='intersect_guest_ids_process', src=['host'], dst=['guest'])
+        self.intersect_host_ids_process = self._create_variable(name='intersect_host_ids_process', src=['host'], dst=['guest'])
+        self.intersect_ids = self._create_variable(name='intersect_ids', src=['guest'], dst=['host'])
+        self.rsa_pubkey = self._create_variable(name='rsa_pubkey', src=['host'], dst=['guest'])
