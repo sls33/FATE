@@ -53,7 +53,14 @@ buildModule() {
   [ -d ${source_code_dir}/docker-build/docker/modules/python/federatedml ] && rm -r ${source_code_dir}/docker-build/docker/modules/python/federatedml
   [ -d ${source_code_dir}/docker-build/docker/modules/python/federatedrec ] && rm -r ${source_code_dir}/docker-build/docker/modules/python/federatedrec
   [ -d ${source_code_dir}/docker-build/docker/modules/python/examples ] && rm -r ${source_code_dir}/docker-build/docker/modules/python/examples
-   [ -f ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-*.tar.gz ] && rm ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-*.tar.gz
+  [ -f ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-*.tar.gz ] && rm ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-*.tar.gz
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/fate_flow ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/fate_flow
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/examples ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/examples
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/arch ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/arch
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/federatedml ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/federatedml
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/federatedrec ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/federatedrec
+  [ -d ${source_code_dir}/docker-build/docker/modules/client/examples ] && rm -r ${source_code_dir}/docker-build/docker/modules/client/examples
+  [ -f ${source_code_dir}/docker-build/docker/modules/client/eggroll-api-*.tar.gz ] && rm ${source_code_dir}/docker-build/docker/modules/client/eggroll-api-*.tar.gz
 
   ln ${source_code_dir}/cluster-deploy/packages/fate-federation-${version}.tar.gz ${source_code_dir}/docker-build/docker/modules/federation/fate-federation-${version}.tar.gz
   ln ${source_code_dir}/cluster-deploy/packages/fate-proxy-${version}.tar.gz ${source_code_dir}/docker-build/docker/modules/proxy/fate-proxy-${version}.tar.gz
@@ -66,6 +73,12 @@ buildModule() {
   cp -r ${source_code_dir}/federatedrec ${source_code_dir}/docker-build/docker/modules/python/federatedrec
   cp -r ${source_code_dir}/examples ${source_code_dir}/docker-build/docker/modules/python/examples
   ln ${source_code_dir}/cluster-deploy/packages/eggroll-api-${version}.tar.gz ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-${version}.tar.gz
+  cp -r ${source_code_dir}/fate_flow ${source_code_dir}/docker-build/docker/modules/client/fate_flow
+  cp -r ${source_code_dir}/arch ${source_code_dir}/docker-build/docker/modules/client/arch
+  cp -r ${source_code_dir}/federatedml ${source_code_dir}/docker-build/docker/modules/client/federatedml
+  cp -r ${source_code_dir}/federatedrec ${source_code_dir}/docker-build/docker/modules/client/federatedrec
+  cp -r ${source_code_dir}/examples ${source_code_dir}/docker-build/docker/modules/client/examples
+  ln ${source_code_dir}/cluster-deploy/packages/eggroll-api-${version}.tar.gz ${source_code_dir}/docker-build/docker/modules/client/eggroll-api-${version}.tar.gz
   cp -r ${source_code_dir}/fate_flow ${source_code_dir}/docker-build/docker/modules/egg/fate_flow
   cp -r ${source_code_dir}/arch ${source_code_dir}/docker-build/docker/modules/egg/arch
   cp -r ${source_code_dir}/federatedml ${source_code_dir}/docker-build/docker/modules/egg/federatedml
@@ -127,7 +140,7 @@ buildModule() {
   # federatedrec
   cd ${source_code_dir}
 
-  for module in "federation" "proxy" "roll" "meta-service" "fateboard" "egg" "python"
+  for module in "client" "federation" "proxy" "roll" "meta-service" "fateboard" "egg" "python"
   do
       echo "### START BUILDING ${module} ###"
       docker build --build-arg version=${version} --build-arg fateboard_version=${fateboard_version} --build-arg PREFIX=${PREFIX} --build-arg BASE_TAG=${BASE_TAG} -t ${PREFIX}/${module}:${TAG} -f ${source_code_dir}/docker-build/docker/modules/${module}/Dockerfile ${source_code_dir}/docker-build/docker/modules/${module}
@@ -162,6 +175,12 @@ buildModule() {
   rm -r ${source_code_dir}/docker-build/docker/modules/python/federatedrec
   rm -r ${source_code_dir}/docker-build/docker/modules/python/examples
   rm ${source_code_dir}/docker-build/docker/modules/python/eggroll-api-${version}.tar.gz
+  rm -r ${source_code_dir}/docker-build/docker/modules/client/fate_flow
+  rm -r ${source_code_dir}/docker-build/docker/modules/client/arch
+  rm -r ${source_code_dir}/docker-build/docker/modules/client/federatedml
+  rm -r ${source_code_dir}/docker-build/docker/modules/client/federatedrec
+  rm -r ${source_code_dir}/docker-build/docker/modules/client/examples
+  rm ${source_code_dir}/docker-build/docker/modules/client/eggroll-api-${version}.tar.gz
   echo ""
 }
 
@@ -315,7 +334,7 @@ package() {
 
 pushImage() {
   ## push image
-  for module in "federation" "proxy" "roll" "python" "meta-service" "fateboard" "egg"
+  for module in "federation" "proxy" "roll" "python" "meta-service" "fateboard" "egg" "client"
   do
       echo "### START PUSH ${module} ###"
       docker push ${PREFIX}/${module}:${TAG}

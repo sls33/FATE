@@ -19,12 +19,11 @@ RUN set -eux; \
     yum clean all;
 
 RUN set -eux; \
-    cd /data/projects/python/ ; \
-    curl https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh > /data/projects/python/Miniconda3-4.5.4-Linux-x86_64.sh ; \
-    \
-    sh ./Miniconda3-*-Linux-x86_64.sh -b -p ${miniconda3_dir} ; \
-    rm -f ./Miniconda3-*-Linux-x86_64.sh;
-
+    cd /data/projects/python/ && \
+    curl -sL https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -o /data/projects/python/Miniconda3-4.5.4-Linux-x86_64.sh && \
+    sh ./Miniconda3-*-Linux-x86_64.sh -b -p ${miniconda3_dir} && \
+    rm -f ./Miniconda3-*-Linux-x86_64.sh
+    
 RUN set -eux; \
     cd /data/projects/python/ ; \
     curl https://webank-ai-1251170195.cos.ap-guangzhou.myqcloud.com/pip-packages-fate-${python_version}.tar.gz > ./pip-packages-fate-${python_version}.tar.gz; \
