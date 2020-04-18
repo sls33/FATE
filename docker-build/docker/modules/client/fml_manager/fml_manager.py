@@ -28,7 +28,7 @@ class FMLManager:
     def __init__(self, server_conf="/data/projects/fate/python/arch/conf/server_conf.json", log_path="./"):
         self.server_conf = file_utils.load_json_conf(server_conf)
         self.ip = self.server_conf.get("servers").get("fateflow").get("host")
-        if self.ip in ['localhost', '127.0.0.1', 'python']:
+        if self.ip in ['localhost', '127.0.0.1']:
             self.ip = get_lan_ip()
 
         self.http_port = self.server_conf.get("servers").get("fateflow").get("http.port")
