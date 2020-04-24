@@ -16,11 +16,13 @@ COPY  federatedml ./federatedml
 COPY  federatedrec ./federatedrec
 COPY  examples/ ./examples
 COPY  eggroll-api-${version}.tar.gz ./
+COPY  fml_agent ./fml_agent
+COPY  start.sh ./
 
 RUN mkdir -p eggroll/api && tar -C eggroll/api -xvf eggroll-api-${version}.tar.gz && \
     rm eggroll-api-${version}.tar.gz && \
-    echo "source /data/projects/python/venv/bin/activate" >> ~/.bashrc
+    echo "source /data/projects/python/venv/bin/activate" >> ~/.bashrc && \
+    mkdir -p ./fml_agent/data
 
 ENV PYTHONPATH=/data/projects/fate/python
-CMD sleep 5; source /data/projects/python/venv/bin/activate && cd ./fate_flow && \
-    python fate_flow_server.py
+CMD sleep 5; source /data/projects/python/venv/bin/activate && bash ./start.sh
