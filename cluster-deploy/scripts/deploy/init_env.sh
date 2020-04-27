@@ -18,6 +18,7 @@
 
 export PYTHONPATH=
 venv=
+export EGGROLL_HOME=
 export JAVA_HOME=
 export PATH=$PATH:$JAVA_HOME/bin
 source ${venv}/bin/activate
